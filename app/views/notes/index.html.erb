@@ -1,29 +1,33 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Listing Notes</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Content</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @notes.each do |note| %>
-      <tr>
-        <td><%= note.title %></td>
-        <td><%= note.content %></td>
-        <td><%= link_to 'Show', note %></td>
-        <td><%= link_to 'Edit', edit_note_path(note) %></td>
-        <td><%= link_to 'Destroy', note, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Note', new_note_path %>
+<% if user_signed_in? %>
+  <div class="container">
+    <h1>Listing Notes</h1>
+      <div class="row">
+        <% @notes.each do |note| %>
+          <div class="col-sm-4">
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                <div class="panel-title">
+                  <%= note.title %>
+                </div>
+              </div>
+              <div class="panel-body">
+                <p><%= note.content %></p>
+                <p>
+                  <strong>
+                    <small> Created by <%= note.user.name %></small>
+                  </strong>
+                </p>
+              </div>
+              <div class="panel-footer">
+                <%= link_to '<i class= "fa fa-eye" data-toggle="tooltip" data-placement="top" title="Show"></i>'.html_safe, note %>&nbsp&nbsp&nbsp
+                <%= link_to '<i class= "fa fa-pencil" data-toggle="tooltip" data-placement="top" title="Edit"></i>'.html_safe, edit_note_path(note) %>&nbsp&nbsp&nbsp
+                <%= link_to '<i class= "fa fa-trash-o" data-toggle="tooltip" data-placement="top" title="Delete"></i>'.html_safe, note, method: :delete, data: { confirm: 'Are you sure?' } %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+  </div>
+<% else %>
+  <%= render 'welcome/index' %>
+<% end %>

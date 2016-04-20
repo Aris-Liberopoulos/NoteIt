@@ -1,0 +1,18 @@
+%nav.navbar.navbar-default.navbar-fixed-top
+  .container
+    .navbar-header
+      %button.navbar-toggle.collapsed{'aria-expanded' => 'false', 'data-target' => '#bs-example-navbar-collapse-1', 'data-toggle' => 'collapse', :type => 'button'}
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      = link_to 'note-It', root_path, class: 'navbar-brand'
+    #bs-example-navbar-collapse-1.collapse.navbar-collapse
+      %ul.nav.navbar-nav.navbar-right
+        - if user_signed_in?
+          %li= link_to 'note <i class= "fa fa-plus-circle fa-lg" data-toggle="tooltip" data-placement="top" title="New"></i>'.html_safe, new_note_path
+          %li= link_to 'Edit Profile', edit_user_registration_path
+          %li= link_to '<i class= "fa fa-sign-out fa-lg" data-toggle="tooltip" data-placement="top" title="Logout"></i>'.html_safe, destroy_user_session_path, method: :delete
+        - else
+          %li= link_to 'Login', new_user_session_path
+

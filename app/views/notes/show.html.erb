@@ -1,14 +1,25 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Title:</strong>
-  <%= @note.title %>
-</p>
-
-<p>
-  <strong>Content:</strong>
-  <%= @note.content %>
-</p>
-
-<%= link_to 'Edit', edit_note_path(@note) %> |
-<%= link_to 'Back', notes_path %>
+<div class="container" id="show_container">
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <div class="panel-title">
+            <%= @note.title %>
+          </div>
+        </div>
+        <div class="panel-body">
+          <p><%= @note.content %></p>
+          <p>
+            <strong>
+              <small> Created by <%= @note.user.name %></small>
+            </strong>
+          </p>
+        </div>
+        <div class="panel-footer">
+          <%= link_to '<i class= "fa fa-pencil" data-toggle="tooltip" data-placement="top" title="Edit"></i>'.html_safe, edit_note_path(@note) %>&nbsp&nbsp&nbsp
+          <%= link_to '<i class= "fa fa-undo" data-toggle="tooltip" data-placement="top" title="Back"></i>'.html_safe, notes_path %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

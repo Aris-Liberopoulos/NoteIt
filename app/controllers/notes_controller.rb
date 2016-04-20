@@ -1,10 +1,10 @@
 class NotesController < ApplicationController
-  before_action :set_note, only: [:show, :edit, :update, :destroy]
+  before_action :set_note, only: [:show]
 
   # GET /notes
   # GET /notes.json
   def index
-    @notes = Note.all
+    @notes = Note.all.order('created_at desc')
   end
 
   # GET /notes/1
@@ -14,17 +14,18 @@ class NotesController < ApplicationController
 
   # GET /notes/new
   def new
-    @note = Note.new
+    @note = current_user.notes.new
   end
 
   # GET /notes/1/edit
   def edit
+    @note = current_user.notes.find(params[:id])
   end
 
   # POST /notes
   # POST /notes.json
   def create
-    @note = Note.new(note_params)
+    @note = current_user.notes.new(note_params)
 
     respond_to do |format|
       if @note.save
@@ -40,6 +41,8 @@ class NotesController < ApplicationController
   # PATCH/PUT /notes/1
   # PATCH/PUT /notes/1.json
   def update
+    @note = current_user.notes.find(params[:id])
+
     respond_to do |format|
       if @note.update(note_params)
         format.html { redirect_to @note, notice: 'Note was successfully updated.' }
@@ -54,6 +57,8 @@ class NotesController < ApplicationController
   # DELETE /notes/1
   # DELETE /notes/1.json
   def destroy
+    @note = current_user.notes.find(params[:id])
+
     @note.destroy
     respond_to do |format|
       format.html { redirect_to notes_url, notice: 'Note was successfully destroyed.' }
